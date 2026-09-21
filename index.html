@@ -431,7 +431,12 @@
 
   /* ---------- hero ---------- */
   #inicio{
-    min-height:100vh;
+    min-height:100vh; /* respaldo para navegadores viejos */
+    /* En celular, "100vh" mide la pantalla como si la barra de direcciones
+       ya estuviera oculta, así que reserva más espacio del que en realidad
+       se ve — eso dejaba un hueco enorme y vacío justo al abrir el sobre.
+       "100dvh" (dynamic viewport height) sí mide lo que realmente se ve. */
+    min-height:100dvh;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center;
     padding-top:60px;
@@ -1131,18 +1136,15 @@ const CONFIG = {
 
   // Fotos de la pareja juntos (sección "Retratos de nuestro amor"). Frida pidió no
   // compartir la historia de cómo se conocieron, así que aquí YA NO hay
-  // texto narrativo — solo la galería. ⚠️ Mariane: esto es obligatorio
-  // según lo que dijiste — necesitas subir aquí a la conversación las
-  // fotos reales de Frida y Simón juntos, y yo las agrego. Mientras no
-  // las tengas, deja "src" vacío y se ve un recuadro de color en su lugar
-  // (no se rompe la página). Cuando las subas:
-  //   1) Guarda cada imagen en la MISMA carpeta que este index.html
-  //      (ej. "foto1.jpg", "foto2.jpg"...).
-  //   2) Escribe ese nombre de archivo exacto en el "src" de abajo.
-  //   3) Puedes agregar más filas si quieres más de 3 fotos — mismo formato.
+  // texto narrativo — solo la galería.
+  // Nota técnica: los nombres de archivo deben coincidir EXACTAMENTE con los
+  // que están subidos al repositorio de GitHub, incluyendo mayúsculas y
+  // minúsculas — a diferencia de Windows, el servidor de GitHub Pages sí
+  // distingue entre "foto1.JPG" y "foto1.jpg". Aquí se dejan en minúsculas
+  // porque así están guardados los archivos reales en el repositorio.
   storyPhotos: [
-    { src: "foto1.JPG", caption: "Frida & Simón" },
-    { src: "foto2.JPG", caption: "Juntos" },
+    { src: "foto1.jpg", caption: "Frida & Simón" },
+    { src: "foto2.jpg", caption: "Juntos" },
     { src: "foto3.jpeg", caption: "Para siempre" }
   ],
 
