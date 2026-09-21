@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Le pide a Google y otros buscadores que NO indexen esta página. No la hace
+     privada (cualquiera con el link la puede abrir), pero evita que aparezca
+     en resultados de búsqueda — importante porque más abajo hay datos
+     bancarios para regalos. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Frida &amp; Simón | Nuestra boda</title>
+
+<!--
+  ============================================================
+  INVITACIÓN DIGITAL DE BODA — hecha por Mariane
+  ============================================================
+  Todo lo que necesitas cambiar para personalizar esta página
+  está en UN SOLO LUGAR: el objeto CONFIG dentro de la etiqueta
+  <script> al final del archivo (búscalo con Ctrl+F "CONFIG").
+  No hace falta tocar el resto del HTML ni del CSS para poner
+  los datos reales de la boda: nombres, fecha, lugares,
+  itinerario y el link del formulario de confirmación.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+  SISTEMA TIPOGRÁFICO (rediseñado para que sea legible Y elegante):
+  - Playfair Display: la serif grande — nombres y títulos de sección.
+    Tiene mucha presencia sin ser cursiva, así que se lee fácil incluso
+    en tamaños grandes.
+  - EB Garamond: la serif de lectura — todo el texto de párrafo y las
+    etiquetas pequeñas. Es la familia clásica de libros, pensada para
+    leerse cómoda en tamaños chicos.
+  - Parisienne: el único acento verdaderamente "script", y se usa MUY
+    poco (solo en los pies de foto cortos de "Nuestra Historia") para
+    que dé un toque romántico sin sacrificar legibilidad en ningún
+    texto largo.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ivory:#f6f1e7;
+    --ivory-soft:#efe8d8;
+    --sage:#8a9678;
+    --sage-dark:#5f6b4d;
+    --sage-pale:#c9d0bb;
+    --ink:#2c2b23;
+    --white:#fffdf8;
+    --line: rgba(44,43,35,0.18);
+    /* sombra de dos capas: una de contacto (pegada al objeto) + una ambiental
+       (difusa y grande) — así es como se ven las sombras reales, no una sola
+       mancha plana. Se usa en tarjetas, polaroids, iconos, el sobre y el sello. */
+    --shadow: 0 1px 2px rgba(44,43,35,0.10), 0 18px 38px -8px rgba(44,43,35,0.22);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    /* fondo en tres capas: luz suave desde arriba + la textura floral
+       repetida que mandó Mariane (fondo-textura.jpg, tilea sin costuras
+       visibles) + el color base como respaldo mientras carga la imagen. */
+       background-image: url("fondo-textura.jpg");
+    background-repeat: repeat;
+    background-size: 300px auto;
+    background-color: var(--ivory);
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    font-size:19px;
+    font-weight:500;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+
+  /* ---------- textura de grano de papel ----------
+     Un ruido SVG (feTurbulence) de fondo, casi invisible (opacity muy baja),
+     mezclado con "multiply" para que oscurezca ligeramente en vez de verse
+     como una capa encima. Es lo que le quita el aspecto "liso de pantalla"
+     a fondos e ilustraciones planas. 100% CSS/SVG, cero imágenes descargadas. */
+  .grain{
+    position:fixed; inset:0; z-index:120; pointer-events:none;
+    opacity:0.05;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* marco fijo tipo "papelería fina" alrededor de toda la pantalla —
+     doble línea delgada, como el borde de una tarjeta de invitación impresa.
+     Es de las cosas que más ayuda a que TODO se sienta "una sola pieza". */
+  .page-frame{
+    position:fixed; inset:12px; z-index:121; pointer-events:none;
+    border:1px solid rgba(95,107,77,0.38);
+  }
+  .page-frame::before{
+    content:'';
+    position:absolute; inset:6px;
+    border:1px solid rgba(95,107,77,0.20);
+  }
+  @media (max-width:520px){
+    .page-frame{ inset:7px; }
+    .page-frame::before{ inset:4px; }
+  }
+
+  h1,h2,h3{font-weight:400;}
+
+  /* Serif grande con presencia — para nombres y títulos. Reemplaza la
+     cursiva anterior (Mrs Saint Delafield), que se veía elegante pero
+     costaba trabajo leer, sobre todo en los títulos de sección. */
+  .display{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:600;
+    line-height:1.05;
+  }
+
+  /* el ÚNICO lugar donde queda una tipografía "script" de verdad — se usa
+     nada más en los pies de foto cortos de Nuestra Historia, donde una
+     o dos palabras en script se leen perfecto y dan el toque romántico
+     sin arriesgar la legibilidad de textos largos. */
+  .accent-script{
+    font-family:'Parisienne', cursive;
+    line-height:1;
+  }
+
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    text-transform:uppercase;
+    letter-spacing:0.32em;
+    font-size:13px;
+    color:var(--sage-dark);
+    font-weight:600;
+  }
+
+  /* icono pequeño y consistente arriba de cada eyebrow — mismo trazo,
+     mismo grosor, mismo color en TODAS las secciones. Esto es lo que hace
+     que se sienta una sola familia visual en vez de piezas sueltas. */
+  .eyebrow-icon{
+    display:block; width:30px; height:30px; margin:0 auto 10px;
+    /* "color" es lo que resuelve currentColor adentro de los <g> reutilizados
+       con <use> — sin esto, los íconos se ven en el tono de tinta oscura en
+       vez del verde salvia (bug encontrado al agregar el ícono de cámara) */
+    color:var(--sage-dark);
+    stroke:var(--sage-dark); fill:none; stroke-width:1.4;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  /* versión " real" del ícono de arriba de un eyebrow (por ahora solo
+     Detalles, con la foto de los anillos que mandó Mariane) — se muestra
+     COMPLETA (object-fit:contain, sin recorte) y la sombra sigue la forma
+     real de la foto (ya sin fondo) en vez de una tarjeta/círculo detrás. */
+  .eyebrow-icon-photo{
+    display:block; width:64px; height:64px; margin:0 auto 12px;
+    object-fit:contain;
+    filter:drop-shadow(0 6px 8px rgba(44,43,35,0.25));
+  }
+  /* el foco del flash de la cámara "dispara" cada tanto — un destello
+     corto que se apaga, simulando la toma fotográfica */
+  .camera-flash{
+    color:#e8c877;
+    animation:cameraBlink 3.4s steps(1) infinite;
+  }
+  @keyframes cameraBlink{
+    0%, 90%{ opacity:0.18; }
+    92%, 96%{ opacity:1; }
+    100%{ opacity:0.18; }
+  }
+
+  a{color:inherit;}
+
+  img{max-width:100%; display:block;}
+
+  /* ---------- utilidades ---------- */
+  .section{
+    max-width:640px;
+    margin:0 auto;
+    padding:110px 28px;
+    position:relative;
+  }
+  /* Un poco más de aire a los lados en celular chico — el espacio extra es
+     justo lo que evita que el texto quede tapado debajo de los lirios
+     calla de los laterales (ver .side-flower), que ahí también se hacen
+     más chicos, pero igual necesitan su espacio. */
+  @media (max-width:560px){
+    .section{ padding-left:58px; padding-right:58px; }
+  }
+
+  .center{text-align:center;}
+
+  .btn{
+    display:inline-block;
+    padding:16px 38px;
+    background:var(--sage-dark);
+    color:var(--white);
+    text-decoration:none;
+    font-family:'EB Garamond', serif;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:600;
+    border-radius:2px;
+    border:1px solid var(--sage-dark);
+    transition:all .35s ease;
+    cursor:pointer;
+  }
+  .btn:hover{background:transparent; color:var(--sage-dark);}
+
+  .divider{
+    width:1px;
+    height:70px;
+    background:linear-gradient(var(--sage), transparent);
+    margin:0 auto;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+
+  /* ---------- lirios calla, fijos a los laterales de toda la página ----------
+     Reemplazan a las flores dibujadas con código (.sprig / #flor). Son la
+     foto real que mandó Mariane, sin fondo, en position:fixed para que se
+     vean SIEMPRE sin importar el scroll (una vez que aparecen). La copia
+     derecha es un espejo horizontal de la misma imagen (el archivo está
+     diseñado como borde izquierdo). pointer-events:none para que nunca
+     estorben un clic.
+     z-index por ENCIMA de .page-frame (121) a propósito: antes las líneas
+     finas del marco de página quedaban dibujadas encima de las flores y se
+     veían "cortadas" — Mariane lo notó y pidió corregirlo.
+     Empiezan con opacity:0 (invisibles) y solo aparecen cuando <body> tiene
+     la clase "envelope-opened" — Mariane pidió explícitamente que NO se
+     vean sobre la pantalla del sobre, solo después de abrirlo. Esa clase la
+     agrega el JS del <script> de abajo, justo cuando se abre el sobre.
+     El nivel de opacidad "final" de cada tamaño de pantalla vive en la
+     variable --flower-opacity, para que la transición de aparición
+     funcione igual en cualquier breakpoint. */
+  .side-flower{
+    position:fixed; top:50%; transform:translateY(-50%);
+    height:80vh; width:auto; max-width:200px;
+    z-index:125; pointer-events:none;
+    --flower-opacity:0.92;
+    opacity:0;
+    transition:opacity 1.1s ease;
+    filter: drop-shadow(0 10px 18px rgba(44,43,35,0.18));
+  }
+  body.envelope-opened .side-flower{ opacity:var(--flower-opacity); }
+  .side-flower-left{ left:0; }
+  .side-flower-right{ right:0; transform:translateY(-50%) scaleX(-1); }
+  /* Mariane pidió que se vean más grandes SOBRE TODO en celular, que es
+     donde la mayoría de los invitados va a abrir la invitación. */
+  @media (max-width:900px){
+    .side-flower{ height:64vh; max-width:112px; --flower-opacity:0.85; }
+  }
+  @media (max-width:560px){
+    /* En pantallas de celular angostas, si las hacemos tan grandes como en
+       escritorio las flores terminan tapando palabras del texto (pasó en
+       las primeras pruebas) — aquí se quedan un poco más chicas que en
+       escritorio/tablet, pero siguen siendo más grandes que antes. El
+       padding extra de .section (ver abajo) es MAYOR que este max-width a
+       propósito, para garantizar que el texto nunca quede tapado. */
+    .side-flower{ height:50vh; max-width:50px; --flower-opacity:0.7; }
+  }
+
+  /* ============================================================
+     PANTALLA DEL SOBRE (intro)
+     ============================================================ */
+  #envelope-screen{
+    position:fixed; inset:0; z-index:100;
+    background:var(--ivory);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    transition:opacity 0.9s ease, visibility 0.9s ease;
+  }
+  #envelope-screen.closed{ opacity:0; visibility:hidden; pointer-events:none; }
+
+  .envelope{
+    position:relative;
+    width:min(78vw, 300px);
+    height:min(56vw, 210px);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    /* sombra de contacto propia del sobre completo, además de la de cada capa */
+    filter: drop-shadow(0 20px 26px rgba(44,43,35,0.20));
+  }
+  .envelope-body{
+    position:absolute; inset:0;
+    border-radius:3px;
+    /* degradado diagonal en vez de color plano: simula cómo la luz pega
+       distinto en cada zona del papel (más claro arriba-izq, más oscuro abajo-der) */
+    background:linear-gradient(155deg, #94a081 0%, var(--sage) 45%, #76835f 100%);
+    box-shadow:var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.15);
+    overflow:hidden;
+  }
+  /* brillo suave cruzando el sobre en diagonal — el típico "sheen" de una
+     superficie de papel/cartulina con textura, hecho solo con gradiente */
+  .envelope-body::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 62%);
+    mix-blend-mode:soft-light;
+  }
+  .envelope-flap{
+    position:absolute; top:0; left:0; width:100%; height:62%;
+    border-radius:3px 3px 0 0;
+    background:linear-gradient(165deg, #7c8969 0%, var(--sage-dark) 55%, #4d5740 100%);
+    clip-path:polygon(0% 0%, 100% 0%, 50% 100%);
+    transform-origin:top center;
+    transition:transform 0.9s cubic-bezier(.6,-0.1,.2,1.3);
+    /* sombra propia de la solapa contra el cuerpo del sobre, para que se
+       lea como una pieza de papel separada y no como un triángulo pintado */
+    filter: drop-shadow(0 6px 6px rgba(0,0,0,0.18));
+  }
+  .envelope.open .envelope-flap{ transform:rotateX(160deg); }
+
+  .seal{
+    position:absolute; top:52%; left:50%;
+    width:66px; height:66px;
+    transform:translate(-50%,-50%) rotate(-4deg);
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .4s ease, transform .4s ease;
+    z-index:2;
+  }
+  /* ---------- sello de cera real (foto de Mariane, sin fondo) ----------
+     Antes era un "blob" de CSS con las iniciales F&S dibujadas encima;
+     ahora es la foto real del sello dorado, ya sin fondo (seal-photo.png),
+     mostrada completa (object-fit:contain) con una sombra que sigue su
+     silueta real en vez de una caja/círculo detrás. */
+  .seal img{
+    width:100%; height:100%;
+    object-fit:contain;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+  }
+  .envelope.open .seal{ opacity:0; transform:translate(-50%,-50%) scale(0.4) rotate(-4deg); }
+
+  /* ---------- logo real, alternativa a color completo ----------
+     Si el logo de Frida y Simón tiene varios colores o mucho detalle
+     (no es una silueta simple), NO conviene meterlo diminuto dentro del
+     sello — se pierde. Esta clase lo muestra a su tamaño y colores
+     reales. Antes iba arriba de todo (antes del "Nos casamos"); Mariane
+     pidió moverlo para que aparezca DESPUÉS de la cuenta regresiva, así
+     que ahora vive ahí (ver el HTML de #inicio) — el margen superior de
+     esta regla es lo que le da aire respecto al countdown de arriba. */
+  .hero-logo{
+    /* 130px -> 169px: 30% más grande, a pedido de Mariane */
+    display:block; margin:46px auto 0; max-width:169px; max-height:169px;
+    filter:drop-shadow(0 6px 10px rgba(44,43,35,0.18));
+  }
+  /* mismo detalle que el botón de música: sin esto, "hidden" no alcanza
+     a ganarle al display:block de arriba y la imagen rota se vería
+     aunque no haya logo configurado */
+  .hero-logo[hidden]{ display:none; }
+
+  /* logo real en el pie de página, reemplazando el texto "Frida & Simón" */
+  .footer-logo{
+    display:block; margin:22px auto 0; max-width:150px; max-height:150px;
+    filter:drop-shadow(0 4px 8px rgba(44,43,35,0.15));
+  }
+  .footer-logo[hidden]{ display:none; }
+
+  .envelope-hint{
+    margin-top:34px;
+    font-family:'EB Garamond', serif;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--sage-dark);
+    animation:pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:0.55;} 50%{opacity:1;} }
+
+  /* ============================================================
+     SITIO PRINCIPAL
+     ============================================================ */
+  #site{
+    opacity:0;
+    transition:opacity 1s ease 0.3s;
+  }
+  #site.visible{opacity:1;}
+
+  /* nav flotante */
+  #dot-nav{
+    position:fixed;
+    right:22px; top:50%; transform:translateY(-50%);
+    z-index:50;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  #dot-nav a{
+    width:9px; height:9px; border-radius:50%;
+    border:1.5px solid var(--sage-dark);
+    display:block;
+  }
+  #dot-nav a.active{ background:var(--sage-dark); }
+  @media (max-width: 640px){ #dot-nav{ display:none; } }
+
+  /* ---------- botón flotante de música ----------
+     Redondo, mismo verde oscuro que los botones y el sello — para que
+     se sienta parte del mismo sistema y no un widget ajeno pegado encima. */
+  .music-btn{
+    position:fixed; left:22px; bottom:22px; z-index:60;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--sage-dark); border:1px solid var(--sage-dark);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:var(--shadow);
+    transition:transform 0.3s ease;
+  }
+  /* el atributo "hidden" por sí solo NO gana contra el display:flex de
+     arriba (misma prioridad, y este viene después) — sin esta línea el
+     botón se seguiría viendo aunque no haya canción configurada */
+  .music-btn[hidden]{ display:none; }
+  .music-btn:hover{ transform:scale(1.07); }
+  .music-btn svg{
+    width:20px; height:20px;
+    color:var(--white);
+    stroke:var(--white); fill:none; stroke-width:2;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  /* mientras suena, un anillo suave que respira alrededor del botón */
+  .music-btn.playing{ animation:musicPulse 2.6s ease-in-out infinite; }
+  @keyframes musicPulse{
+    0%,100%{ box-shadow:var(--shadow), 0 0 0 0 rgba(95,107,77,0.28); }
+    50%{ box-shadow:var(--shadow), 0 0 0 9px rgba(95,107,77,0); }
+  }
+  @media (max-width:640px){
+    .music-btn{ left:16px; bottom:16px; width:40px; height:40px; }
+    .music-btn svg{ width:18px; height:18px; }
+  }
+
+  /* ---------- hero ---------- */
+  #inicio{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding-top:60px;
+  }
+  #inicio .eyebrow{ margin-bottom:22px; }
+  #inicio .names{
+    font-size:clamp(52px, 12vw, 92px);
+    color:var(--ink);
+  }
+  #inicio .amp{ color:var(--sage-dark); display:block; font-size:0.55em; margin:-6px 0; }
+  #inicio .date-line{
+    margin-top:26px;
+    font-size:20px;
+    letter-spacing:0.08em;
+  }
+
+  /* countdown */
+  #countdown{
+    margin-top:46px;
+    display:flex; gap:22px;
+  }
+  #countdown .box{ text-align:center; min-width:64px; }
+  #countdown .num{
+    font-size:34px;
+    color:var(--sage-dark);
+    font-variant-numeric: tabular-nums;
+  }
+  #countdown .label{
+    font-family:'EB Garamond', serif;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.2em;
+    margin-top:4px;
+  }
+
+  .scroll-cue{
+    margin-top:60px;
+    font-size:26px;
+    color:var(--sage-dark);
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+  /* ---------- encabezados de sección ---------- */
+  .section-title{
+    font-size:56px;
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .section-sub{
+    text-align:center;
+    color:var(--sage-dark);
+    font-style:italic;
+    margin-bottom:56px;
+  }
+
+  /* ---------- itinerario ---------- */
+  #timeline{ position:relative; margin-top:20px; }
+  #timeline::before{
+    content:'';
+    position:absolute; left:27px; top:6px; bottom:6px; width:1px;
+    background:var(--sage-pale);
+  }
+  .tl-item{
+    position:relative;
+    display:flex; gap:22px;
+    padding-bottom:38px;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-icon{
+    flex:none;
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--white);
+    border:1px solid var(--sage-pale);
+    display:flex; align-items:center; justify-content:center;
+    z-index:1;
+    box-shadow:var(--shadow);
+  }
+  /* los íconos de la línea de tiempo usan la misma familia SVG de los
+     eyebrows — mismo trazo, mismo color, ninguna imagen suelta ni emoji */
+  .tl-icon svg{
+    width:26px; height:26px;
+    color:var(--sage-dark);
+    stroke:var(--sage-dark); fill:none; stroke-width:1.6;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  .tl-text .time{
+    font-family:'EB Garamond', serif;
+    letter-spacing:0.12em;
+    color:var(--sage-dark);
+    font-size:14px;
+    text-transform:uppercase;
+  }
+  .tl-text .title{ font-size:23px; }
+
+  .venue-card{
+    margin-top:56px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 28px;
+    box-shadow:var(--shadow);
+  }
+  .venue-card + .venue-card{ margin-top:20px; }
+  .venue-card h4{ font-size:24px; margin-bottom:4px; }
+  .venue-card .addr{ color:#5a5a4f; margin-bottom:14px; }
+
+  .dress-code{
+    margin-top:56px;
+    text-align:center;
+  }
+  .dress-code .swatches{
+    display:flex; justify-content:center; flex-wrap:wrap; gap:18px 14px; margin-top:16px;
+  }
+  /* cada color va acompañado de su nombre debajo, para que quien lo lea
+     en el celular sepa exactamente qué tono es sin tener que adivinar */
+  .dress-code .swatch-item{
+    display:flex; flex-direction:column; align-items:center; gap:7px;
+    width:64px;
+  }
+  .dress-code .swatch{
+    width:30px; height:30px; border-radius:50%;
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+  }
+  .dress-code .swatch-name{
+    font-family:'EB Garamond', serif;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--sage-dark);
+    line-height:1.25;
+  }
+  .dress-code .note{
+    margin-top:14px;
+    font-size:15px;
+    color:#6b5a3a;
+    font-style:italic;
+  }
+  /* link a Pinterest con ideas de outfit — mismo lenguaje visual que las
+     demás notas de esta sección, pero subrayado para que se lea como link */
+  .pinterest-link{
+    display:inline-block;
+    margin-top:16px;
+    font-family:'EB Garamond', serif;
+    font-size:15px;
+    letter-spacing:0.03em;
+    color:var(--sage-dark);
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .pinterest-link[hidden]{ display:none; }
+
+  /* ---------- frase destacada ---------- */
+  #frase blockquote{
+    font-family:'EB Garamond', serif;
+    font-style:italic;
+    font-size:26px;
+    line-height:1.55;
+    text-align:center;
+    color:#4c4b41;
+    max-width:520px;
+    margin:0 auto;
+  }
+  #frase .divider{ margin-bottom:36px; }
+
+  /* ---------- regalo / transferencia ---------- */
+  .gift-card{
+    margin-top:30px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:30px 28px;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .gift-card .row{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:17px;
+    text-align:left;
+  }
+  .gift-card .row:last-child{ border-bottom:none; }
+  .gift-card .row .k{ color:var(--sage-dark); letter-spacing:0.02em; }
+  .gift-card .row .v{ font-weight:600; text-align:right; }
+
+  /* ---------- galería de fotos "Retratos de nuestro amor" ----------
+     Mariane pidió volver al estilo de foto instantánea (marcos blancos
+     ligeramente inclinados) de la primera versión — le gustaba más que
+     la cuadrícula pareja de la segunda pasada. */
+  #historia-photos{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:24px;
+    margin:36px 0 50px;
+  }
+  .polaroid{
+    background:var(--white);
+    padding:14px 14px 34px;
+    box-shadow:var(--shadow);
+    width:190px;
+  }
+  .polaroid:nth-child(1){ transform:rotate(-5deg); }
+  .polaroid:nth-child(2){ transform:rotate(4deg); margin-top:18px; }
+  .polaroid:nth-child(3){ transform:rotate(-2deg); }
+  .polaroid .ph{
+    width:100%; height:220px;
+    background:linear-gradient(135deg, var(--sage-pale), var(--ivory-soft));
+    display:flex; align-items:center; justify-content:center;
+    color:var(--sage-dark);
+    font-family:'EB Garamond', serif;
+    font-size:13px;
+    text-align:center;
+    padding:10px;
+  }
+  .polaroid img{
+    width:100%; height:220px; object-fit:cover; display:block;
+  }
+  .polaroid .cap{
+    text-align:center;
+    font-family:'Parisienne', cursive;
+    font-size:22px;
+    margin-top:10px;
+    color:var(--sage-dark);
+  }
+
+  /* ---------- tarjeta "Tips y notas" ----------
+     Card redondeada con un ícono en un círculo que SOBRESALE del borde
+     superior (siguiendo el estilo de la referencia que mandó Mariane),
+     y una lista de recordatorios con viñetas propias (no las nativas del
+     navegador, para controlar bien el espaciado). */
+  .tips-card{
+    position:relative;
+    margin-top:44px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:42px 28px 34px;
+    box-shadow:var(--shadow);
+    text-align:left;
+  }
+  .tips-icon-badge{
+    position:absolute; top:0; left:50%;
+    transform:translate(-50%, -50%);
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--sage-dark);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .tips-icon-badge svg{
+    width:26px; height:26px;
+    color:var(--white);
+    stroke:var(--white); fill:none; stroke-width:1.8;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  .tips-list{
+    list-style:none;
+    max-width:440px;
+    margin:0 auto;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .tips-list li{
+    display:flex; gap:12px; align-items:flex-start;
+    font-size:17px;
+    line-height:1.5;
+  }
+  .tips-list li .bullet{
+    flex:none; width:7px; height:7px; margin-top:9px;
+    border-radius:50%;
+    background:var(--sage-dark);
+  }
+  .tips-list li.important{ color:var(--sage-dark); font-weight:600; }
+  .tips-closing{
+    margin-top:24px;
+    text-align:center;
+    font-style:italic;
+    color:var(--sage-dark);
+  }
+
+  /* ---------- ubicación ---------- */
+  .map-frame{
+    width:100%; height:260px;
+    border:0; border-radius:16px;
+    filter:grayscale(0.15) sepia(0.08);
+  }
+
+  /* ---------- rsvp ---------- */
+  #rsvp{ text-align:center; }
+  #rsvp .deadline{ margin:18px 0 34px; color:var(--sage-dark); font-style:italic; }
+  /* nota debajo del botón, pidiendo nombre completo + restricción alimenticia
+     al llenar el formulario (Mariane agregó esa pregunta directo en el
+     Google Form, que ya alimenta el mismo Google Sheet) */
+  .rsvp-extra-note{
+    max-width:400px; margin:22px auto 0;
+    font-size:15px; line-height:1.6;
+    font-style:italic;
+    color:#6b6a5c;
+  }
+
+  footer{
+    text-align:center;
+    padding:70px 28px 50px;
+    color:var(--sage-dark);
+  }
+  footer .fname{ font-family:'Playfair Display', serif; font-style:italic; font-weight:600; font-size:32px; }
+  /* Este es el texto de cierre (el mensaje de agradecimiento final) — antes
+     estaba a 13px y en un gris muy claro, difícil de leer. Se sube el
+     tamaño y se oscurece un poco el color para que sea legible sin perder
+     elegancia. */
+  footer .credit{
+    max-width:440px; margin:26px auto 0;
+    font-size:17px; line-height:1.6;
+    letter-spacing:0.02em;
+    font-style:italic;
+    color:#6b6a5c;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Textura de grano de papel sobre toda la página (ver .grain en el CSS) -->
+<div class="grain"></div>
+<!-- Marco fino fijo tipo "papelería" alrededor de toda la pantalla (ver .page-frame) -->
+<div class="page-frame"></div>
+
+<!-- Lirios calla fijos a los laterales — se quedan visibles en TODO momento
+     mientras se hace scroll (ver .side-flower en el CSS). La imagen de la
+     derecha es la misma foto espejeada horizontalmente. -->
+<img src="calla-lily.png" class="side-flower side-flower-left" alt="" aria-hidden="true">
+<img src="calla-lily.png" class="side-flower side-flower-right" alt="" aria-hidden="true">
+
+<!-- ============================================================
+     PANTALLA DE SOBRE (se ve primero, se abre con un clic/tap)
+     ============================================================ -->
+<div id="envelope-screen">
+  <div class="envelope" id="envelope">
+    <div class="envelope-body"></div>
+    <div class="envelope-flap"></div>
+    <div class="seal" id="seal">
+      <img src="seal-photo.png" alt="Sello de cera con las iniciales de Frida y Simón">
+    </div>
+  </div>
+  <div class="envelope-hint">Toca el sobre para abrir tu invitación</div>
+</div>
+
+<!-- nav lateral de puntos (solo escritorio) -->
+<nav id="dot-nav">
+  <a href="#inicio" data-label="Inicio" class="active"></a>
+  <a href="#detalles" data-label="Detalles"></a>
+  <a href="#historia" data-label="Historia"></a>
+  <a href="#ubicacion" data-label="Ubicación"></a>
+  <a href="#tips" data-label="Tips"></a>
+  <a href="#regalo" data-label="Regalo"></a>
+  <a href="#rsvp" data-label="RSVP"></a>
+</nav>
+
+<!-- Botón flotante para reproducir/pausar la canción de fondo. Se
+     oculta solo si CONFIG.songSrc está vacío (ver <script> abajo). -->
+<button id="music-toggle" class="music-btn" type="button" aria-label="Reproducir música" hidden>
+  <svg viewBox="0 0 48 48"><use href="#icon-music-off" id="music-icon-use"/></svg>
+</button>
+<audio id="bg-song" loop preload="none"></audio>
+
+<main id="site">
+
+  <!-- ================= HERO ================= -->
+  <section id="inicio" class="section">
+    <p class="eyebrow" id="hero-eyebrow">Nos casamos</p>
+    <h1 class="names display">
+      <span id="hero-names">Frida &amp; —</span>
+    </h1>
+    <p class="date-line" id="hero-date">05 de diciembre de 2026</p>
+
+    <div id="countdown">
+      <div class="box"><div class="num" id="cd-days">00</div><div class="label">Días</div></div>
+      <div class="box"><div class="num" id="cd-hours">00</div><div class="label">Hrs</div></div>
+      <div class="box"><div class="num" id="cd-min">00</div><div class="label">Min</div></div>
+      <div class="box"><div class="num" id="cd-sec">00</div><div class="label">Seg</div></div>
+    </div>
+
+    <!-- Si CONFIG.showLogoHero = true, aquí aparece el logo real a color completo,
+         justo después de la cuenta regresiva (a pedido de Mariane). -->
+    <img id="hero-logo" class="hero-logo" alt="Logo Frida &amp; Simón" hidden>
+
+    <div class="scroll-cue">&#8595;</div>
+  </section>
+
+  <!-- ================= FRASE ================= -->
+  <section id="frase" class="section reveal center">
+    <svg class="eyebrow-icon" viewBox="0 0 48 48"><use href="#icon-quill"/></svg>
+    <div class="divider"></div>
+    <blockquote id="quote-text">Frase de la pareja</blockquote>
+  </section>
+
+  <!-- ================= DETALLES ================= -->
+  <section id="detalles" class="section reveal">
+    <!-- Mariane pidió la foto real de los anillos aquí, en vez del ícono
+         de línea de dos círculos intersectados. -->
+    <img src="rings-photo.png" alt="Anillos de compromiso" class="eyebrow-icon-photo">
+    <p class="eyebrow center" style="margin-bottom:10px;">Detalles</p>
+    <h2 class="section-title display">El gran día</h2>
+    <p class="section-sub">Así se vivirá nuestra celebración</p>
+
+    <div id="timeline"></div>
+
+    <div id="venues-in-details"></div>
+
+    <div class="dress-code" id="dress-code-block">
+      <p class="eyebrow" style="margin-bottom:2px;">Código de vestimenta</p>
+      <p id="dress-code-text" style="font-size:22px;" class="display">Formal / Elegante</p>
+      <div class="swatches" id="dress-swatches"></div>
+      <p class="note" id="dress-code-note"></p>
+      <!-- Link a Pinterest con ideas de outfit, solo aparece si CONFIG.dressCodePinterestUrl tiene algo -->
+      <a id="dress-code-pinterest" class="pinterest-link" href="#" target="_blank" rel="noopener" hidden>Ver ideas de outfit en Pinterest →</a>
+    </div>
+  </section>
+
+  <!-- ================= RETRATOS DE NUESTRO AMOR (antes "Historia") =====
+       Frida pidió explícitamente NO compartir cómo se conocieron (es algo
+       personal), así que esta sección ya no lleva texto narrativo — es
+       solo una galería de fotos de la pareja. -->
+  <section id="historia" class="section reveal">
+    <svg class="eyebrow-icon camera-icon" viewBox="0 0 48 48">
+      <use href="#icon-camera"/>
+      <use href="#icon-camera-flash" class="camera-flash"/>
+    </svg>
+    <p class="eyebrow center" style="margin-bottom:10px;">Recuerdos</p>
+    <h2 class="section-title display center">Retratos de nuestro amor</h2>
+    <p class="section-sub">La clave es disfrutar cada momento</p>
+
+    <div id="historia-photos"></div>
+  </section>
+
+  <!-- ================= UBICACIÓN ================= -->
+  <section id="ubicacion" class="section reveal">
+    <svg class="eyebrow-icon" viewBox="0 0 48 48"><use href="#icon-pin"/></svg>
+    <p class="eyebrow center" style="margin-bottom:10px;">Ubicación</p>
+    <h2 class="section-title display center">¿Cómo llegar?</h2>
+    <p class="section-sub">Da clic en "Cómo llegar" para abrir la ruta en Google Maps</p>
+
+    <div id="venues-map-list"></div>
+  </section>
+
+  <!-- ================= TIPS Y NOTAS =================
+       Tarjeta con recordatorios prácticos para los invitados: puntualidad,
+       "solo adultos" (remarcado, es importante para Frida y Simón), fecha
+       límite de confirmación y qué llevar puesto por la noche. -->
+  <section id="tips" class="section reveal center">
+    <p class="eyebrow" style="margin-bottom:10px;">Antes de venir</p>
+    <h2 class="section-title display">Tips y notas</h2>
+    <p class="section-sub">Para que disfrutes la fiesta sin preocupaciones</p>
+    <div class="tips-card">
+      <div class="tips-icon-badge"><svg viewBox="0 0 48 48"><use href="#icon-note"/></svg></div>
+      <ul class="tips-list" id="tips-list"></ul>
+      <p class="tips-closing" id="tips-closing"></p>
+    </div>
+  </section>
+
+  <!-- ================= REGALO ================= -->
+  <section id="regalo" class="section reveal center">
+    <svg class="eyebrow-icon" viewBox="0 0 48 48"><use href="#icon-gift"/></svg>
+    <p class="eyebrow" style="margin-bottom:10px;">Regalos</p>
+    <h2 class="section-title display" id="gift-title">Si quieres darnos algo más que tu hermosa presencia..</h2>
+    <p class="section-sub" id="gift-note" style="margin-bottom:26px;"></p>
+    <div class="gift-card" id="gift-card"></div>
+  </section>
+
+  <!-- ================= RSVP ================= -->
+  <section id="rsvp" class="section reveal">
+    <svg class="eyebrow-icon" viewBox="0 0 48 48"><use href="#icon-mail"/></svg>
+    <p class="eyebrow" style="margin-bottom:10px;">Confirmación</p>
+    <h2 class="section-title display">¿Nos acompañas?</h2>
+    <p class="deadline" id="rsvp-deadline">Por favor confirma tu asistencia antes del 1 de noviembre de 2026</p>
+    <a id="rsvp-btn" class="btn" href="#" target="_blank" rel="noopener">Confirmar asistencia</a>
+    <p class="rsvp-extra-note" id="rsvp-extra-note"></p>
+  </section>
+
+  <footer>
+    <div class="divider"></div>
+    <p class="fname" id="footer-names" style="margin-top:22px;">Frida &amp; —</p>
+    <!-- Si CONFIG.showLogoFooter = true, esta imagen reemplaza el texto de arriba -->
+    <img id="footer-logo" class="footer-logo" alt="Logo Frida &amp; Simón" hidden>
+    <p class="credit" id="footer-thanks">Hecho con cariño para su gran día</p>
+  </footer>
+
+</main>
+
+<!-- ============================================================
+     FAMILIA DE ÍCONOS — dibujados a mano, mismo estilo de trazo
+     (línea delgada, puntas redondas, sin relleno) para que TODOS
+     se sientan parte de una sola familia visual. Se usan con
+     color:currentColor así toman el color de donde se pongan.
+     viewBox uniforme 0 0 48 48 en todos.
+     (La flor decorativa dibujada a mano que vivía aquí, #flor, se quitó:
+     ahora los lirios calla reales —calla-lily.png, fijos a los laterales—
+     hacen ese trabajo decorativo.)
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="icon-rings" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="27" r="10"/>
+      <circle cx="30" cy="27" r="10"/>
+    </g>
+
+    <g id="icon-glasses" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9,8 L15,26 C15,30 21,30 21,26 L15,8 Z"/>
+      <path d="M9,8 L21,8"/>
+      <path d="M15,30 L15,38"/>
+      <path d="M10,38 L20,38"/>
+      <path d="M39,10 L33,24 C33,29 41,29 41,24 L35,10 Z" transform="rotate(8 37 20)"/>
+      <path d="M34,9 L44,12" transform="rotate(8 37 20)"/>
+      <path d="M37,29 L38,38" transform="rotate(8 37 20)"/>
+      <path d="M33,39 L43,37" transform="rotate(8 37 20)"/>
+      <path d="M23,15 L27,17" stroke-dasharray="0.5 4"/>
+    </g>
+
+    <g id="icon-pin" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24,44 C24,44 38,30.5 38,20 C38,11.7 31.7,6 24,6 C16.3,6 10,11.7 10,20 C10,30.5 24,44 24,44 Z"/>
+      <circle cx="24" cy="20" r="6.5"/>
+    </g>
+
+    <g id="icon-heart" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24,41 C24,41 6,29.5 6,17.5 C6,10.6 11.2,6 17,6 C20.5,6 23,7.8 24,10.5 C25,7.8 27.5,6 31,6 C36.8,6 42,10.6 42,17.5 C42,29.5 24,41 24,41 Z"/>
+    </g>
+
+    <g id="icon-gift" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="19" width="32" height="9" rx="1.5"/>
+      <rect x="11" y="28" width="26" height="16" rx="1.5"/>
+      <path d="M24,19 L24,44"/>
+      <path d="M24,19 C24,19 15,19 15,12.5 C15,9 18,7 20.5,8.5 C23,10 24,14 24,19 Z"/>
+      <path d="M24,19 C24,19 33,19 33,12.5 C33,9 30,7 27.5,8.5 C25,10 24,14 24,19 Z"/>
+    </g>
+
+    <g id="icon-mail" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="11" width="36" height="26" rx="2"/>
+      <path d="M7,13 L24,27 L41,13"/>
+      <path d="M17,33 C20,29 28,29 31,33" stroke-dasharray="0.4 3.6"/>
+    </g>
+
+    <g id="icon-quill" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M40,8 C28,10 14,20 9,38 C22,34 33,25 40,8 Z"/>
+      <path d="M9,38 C11,32 15,26 20,22"/>
+    </g>
+
+    <!-- ícono de música (botón flotante para la canción) — mismas dos
+         corcheas unidas por una barra, mismo trazo que el resto -->
+    <g id="icon-music" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="14" cy="36" rx="6" ry="4.4" transform="rotate(-8 14 36)"/>
+      <ellipse cx="34" cy="32" rx="6" ry="4.4" transform="rotate(-8 34 32)"/>
+      <path d="M20,35 L20,10 L40,6 L40,28"/>
+      <path d="M20,15 L40,11"/>
+    </g>
+    <!-- misma pieza, con una línea diagonal — se usa cuando la canción
+         está en pausa/silenciada -->
+    <g id="icon-music-off" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="14" cy="36" rx="6" ry="4.4" transform="rotate(-8 14 36)"/>
+      <ellipse cx="34" cy="32" rx="6" ry="4.4" transform="rotate(-8 34 32)"/>
+      <path d="M20,35 L20,10 L40,6 L40,28"/>
+      <path d="M20,15 L40,11"/>
+      <path d="M6,6 L42,42"/>
+    </g>
+
+    <!-- cámara instantánea — para "Retratos de nuestro amor". Se dibuja en
+         dos piezas: el cuerpo de la cámara (trazo fijo, familia de íconos)
+         y el foco del flash (relleno sólido) que parpadea con CSS. -->
+    <g id="icon-camera" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="15" y="9" width="11" height="6" rx="1.5"/>
+      <rect x="5" y="14" width="38" height="26" rx="3"/>
+      <circle cx="23" cy="27" r="8"/>
+      <circle cx="23" cy="27" r="3.2"/>
+    </g>
+    <g id="icon-camera-flash" fill="currentColor" stroke="none">
+      <circle cx="36" cy="20" r="2.6"/>
+    </g>
+
+    <!-- notita/checklist — para el badge de "Tips y notas" -->
+    <g id="icon-note" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="6" width="28" height="36" rx="3"/>
+      <path d="M16,17 L32,17"/>
+      <path d="M16,25 L32,25"/>
+      <path d="M16,33 L26,33"/>
+    </g>
+  </defs>
+</svg>
+
+<script>
+/* ============================================================
+   CONFIG — EDITA SOLO AQUÍ para poner los datos reales de la boda.
+   No necesitas tocar nada más del archivo.
+   ============================================================ */
+const CONFIG = {
+
+  // Nombres de la pareja tal como quieren que aparezcan
+  coupleNames: "Frida & Simón",
+
+  // ---------- LOGO REAL DE FRIDA Y SIMÓN ----------
+  // ✅ Ya integrado: te quité el fondo casi blanco al logo que mandó Frida
+  // (quedó en "logo-fs.png", transparente de verdad) y lo puse al final
+  // de la invitación, reemplazando el texto "Frida & Simón" del footer —
+  // tal como pediste. Guarda "logo-fs.png" en la MISMA carpeta que este
+  // index.html para que se vea.
+  //   logoSrc: nombre del archivo del logo, guardado junto a index.html.
+  //   showLogoHero / showLogoFooter: puedes activar los dos a la vez (antes
+  //   solo se podía elegir uno con "logoDisplay") — Mariane pidió que el
+  //   logo apareciera TAMBIÉN en la portada, después de la cuenta regresiva,
+  //   sin quitarlo del pie de página:
+  //     - showLogoHero: true → el logo se muestra a su tamaño y colores
+  //       reales, justo debajo del countdown en la portada.
+  //     - showLogoFooter: true → el logo reemplaza el texto "Frida & Simón"
+  //       al final de la invitación.
+  // Si logoSrc queda vacío (""), todo sigue funcionando igual que antes
+  // (texto normal en el footer, sin logo en la portada).
+  logoSrc: "logo-fs.png",
+  showLogoHero: true,
+  showLogoFooter: true,
+
+  // Fecha y hora de la boda en formato: "AAAA-MM-DDTHH:MM:SS"
+  // (hora local de la Ciudad de México). Se usa para la cuenta regresiva.
+  // ✅ Ya confirmado por Frida: 5 de diciembre de 2026, ceremonia 4:00 p.m.
+  weddingDateTime: "2026-12-05T16:00:00",
+  weddingDateDisplay: "05 de diciembre de 2026", // texto bonito que se muestra
+
+  // Frase que la pareja quiere destacar (aparece justo debajo del countdown)
+  quote: "Porque hay riesgos que merecen la pena, caminos que vale la pena recorrer y, sobre todo, un amor por el que siempre elegiríamos quedarnos. Porque lo mejor de la vida es el amor, y nosotros tuvimos la suerte de encontrarnos en él.",
+
+  // Itinerario del día — SOLO lo que Frida ya confirmó. El cóctel todavía
+  // está "por confirmar" (ella misma lo dijo así) — en cuanto te pase la
+  // hora exacta, quítale el "(por confirmar)" al título. Si te manda más
+  // momentos del día (cena, baile, fiesta...), agrégalos aquí como filas
+  // nuevas, mismo formato que las que ya están.
+  // El "icon" usa una de las llaves de la familia de íconos dibujada en el
+  // <svg><defs> de más abajo: "rings" (anillos), "glasses" (copas) — si Frida
+  // te pasa más momentos del día puedes reutilizar estas mismas llaves o
+  // pedirme que agreguemos una nueva al mismo estilo.
+  itinerary: [
+    { time: "4:00 P.M.",        title: "Ceremonia religiosa",     icon: "rings" },
+    { time: "6:00 – 6:30 P.M.", title: "Cóctel de bienvenida",    icon: "glasses" },
+  ],
+  // Nota que aparece debajo del itinerario, mientras falten horarios por confirmar.
+  // Cuando ya tengas el itinerario completo, puedes borrar esta línea (déjala en "").
+  itineraryNote: "El resto del itinerario se confirmará más adelante.",
+
+  // Lugares: ceremonia y recepción (ya confirmados por Frida)
+  venues: [
+    {
+      label: "Ceremonia",
+      name: "Parroquia de San Josemaría Escrivá",
+      address: "Joaquín Gallo 101, Santa Fe, Zedec Sta Fé, Álvaro Obregón, 01219 Ciudad de México, CDMX",
+      mapsQuery: "Parroquia de San Josemaría Escrivá, Joaquín Gallo 101, Santa Fe, Ciudad de México"
+    },
+    {
+      label: "Recepción",
+      name: "Cedrela Banquetes",
+      address: "Av. Camino al Bosque 209, Loma del Padre, Cuajimalpa de Morelos, 05020 Ciudad de México, CDMX",
+      mapsQuery: "Cedrela Banquetes, Av. Camino al Bosque 209, Cuajimalpa de Morelos, Ciudad de México"
+    }
+  ],
+
+  dressCode: "Formal",
+  // Nota importante que pidió Frida — se muestra debajo de los colores sugeridos
+  dressCodeNote: "Para ellas: se pide evitar el blanco, el beige y el rojo.",
+  // Link de Pinterest con ideas de outfit para que los invitados se den una
+  // idea de cómo Frida quiere que vayan vestidos. Si lo dejas vacío (""),
+  // el link simplemente no aparece.
+  dressCodePinterestUrl: "https://pin.it/3qtyJpA0s",
+  // Colores SUGERIDOS (ya quitamos tonos blancos/beige/rojos de la paleta,
+  // para no contradecir la nota de arriba)
+  // Cada tono lleva su nombre — así se entiende bien sin tener que adivinar
+  // el color a partir del círculo. Puedes editar los nombres o el "hex"
+  // (el código de color) libremente; si agregas un color nuevo, cualquier
+  // buscador de "color picker" en línea te da su código hex.
+  dressColors: [
+    { hex: "#5f6b4d", name: "Salvia oscuro" },
+    { hex: "#8a9678", name: "Salvia" },
+    { hex: "#2c2b23", name: "Negro tinta" },
+    { hex: "#3b3a2f", name: "Verde oliva" },
+    { hex: "#6b5a3a", name: "Café tierra" },
+  ],
+
+  // ---------- TIPS Y NOTAS ----------
+  // Recordatorios prácticos que se muestran en la tarjeta "Tips y notas".
+  // Puedes agregar, quitar o reordenar filas libremente — mismo formato.
+  // "important: true" los pinta en verde salvia y en negritas, para que
+  // resalten (se usó en el de "solo adultos", que Frida pidió remarcar).
+  // Nota: el aviso de "solo adultos" ANTES también se mostraba aparte, en
+  // el código de vestimenta — Mariane pidió quitarlo de ahí para no
+  // repetirlo, así que ahora vive únicamente aquí, con el motivo explicado.
+  tips: [
+    { text: "Te pedimos puntualidad: la ceremonia comenzará a la hora indicada.", important: false },
+    { text: "Este es un evento solo para adultos: para que puedan disfrutar la fiesta al máximo, preferimos que no asistan niños.", important: true },
+    { text: "Por favor confirma tu asistencia antes del 20 de octubre de 2026.", important: true },
+    { text: "Las noches al aire libre refrescan bastante: te recomendamos llevar algo abrigador.", important: false },
+  ],
+  // Frase de cierre, abajo de la lista de tips
+  tipsClosing: "Olvídate de todo y ven a disfrutar con nosotros",
+
+  // Fotos de la pareja juntos (sección "Retratos de nuestro amor"). Frida pidió no
+  // compartir la historia de cómo se conocieron, así que aquí YA NO hay
+  // texto narrativo — solo la galería. ⚠️ Mariane: esto es obligatorio
+  // según lo que dijiste — necesitas subir aquí a la conversación las
+  // fotos reales de Frida y Simón juntos, y yo las agrego. Mientras no
+  // las tengas, deja "src" vacío y se ve un recuadro de color en su lugar
+  // (no se rompe la página). Cuando las subas:
+  //   1) Guarda cada imagen en la MISMA carpeta que este index.html
+  //      (ej. "foto1.jpg", "foto2.jpg"...).
+  //   2) Escribe ese nombre de archivo exacto en el "src" de abajo.
+  //   3) Puedes agregar más filas si quieres más de 3 fotos — mismo formato.
+  storyPhotos: [
+    { src: "foto1.JPG", caption: "Frida & Simón" },
+    { src: "foto2.JPG", caption: "Juntos" },
+    { src: "foto3.jpeg", caption: "Para siempre" }
+  ],
+
+  // Regalos: SOLO transferencia, ya no habrá mesa de regalos física — Frida
+  // y Simón se mudan a España para empezar su vida juntos, y ese dinero es
+  // justo para eso. El texto de abajo lo deja claro pero con cariño.
+  // ⚠️ Mariane: esto son datos bancarios reales y esta página es pública en
+  // internet. Ya le puse "noindex" para que no salga en buscadores, pero
+  // cualquiera con el link la puede ver igual — coméntaselo a Frida (algunas
+  // parejas prefieren solo poner el nombre del banco + CLABE sin el número
+  // de cuenta corta, o mandar los datos completos aparte por WhatsApp a
+  // quien confirme asistencia). Si ella está de acuerdo con dejarlo así,
+  // no hay que cambiar nada.
+  gift: {
+    note: "Estamos por comenzar un capítulo nuevo: nos mudamos a España para construir nuestra vida juntos. Por eso decidimos no tener una mesa de regalos física — si quieres acompañarnos en este comienzo, una transferencia a la siguiente cuenta es la mejor forma de hacerlo. Cada gesto se convertirá en parte de nuestro nuevo hogar.",
+    bank: "Banamex",
+    accountName: "Frida Nicole Cedillo Moran",
+    clabe: "002180701922271765",
+    account: "2227176",
+  },
+
+  // Link del Google Form para confirmar asistencia.
+  // Instrucciones para crearlo están en el archivo README.md
+  rsvpFormUrl: "https://forms.gle/oCi8xthDKWr8DbcWA",
+  // ✅ Fecha límite ya confirmada por Frida y Simón: 20 de octubre de 2026.
+  rsvpDeadline: "Por favor confirma tu asistencia antes del 20 de octubre de 2026",
+  // Nota debajo del botón, para que no se les olvide poner su nombre
+  // completo y avisar si tienen alguna restricción alimenticia (Mariane
+  // agregó esa pregunta directo en el Google Form).
+  rsvpExtraNote: "Al confirmar, cuéntanos tu nombre completo y, si tienes alguna restricción alimenticia, puedes hacernos saber al confirmar tu asistencia. Queremos cuidar hasta el último detalle contigo.",
+
+  // Frase de cierre que va en el pie de página (pedida por Frida)
+  thankYouMessage: "Hay momentos en la vida que son inolvidables, pero compartirlos con quienes más queremos los hace eternos. Gracias por ser parte de nuestra historia.",
+
+  // Canción de fondo — aparece un botón redondo flotante (abajo a la
+  // izquierda) para reproducirla/pausarla; empieza a sonar sola justo
+  // cuando el invitado abre el sobre (los navegadores solo dejan
+  // reproducir audio automáticamente después de un clic/tap real, y abrir
+  // el sobre YA es ese clic, así que funciona sin que se sienta forzado).
+  // ✅ Ya integrada: tu mp3 quedó guardado como "cancion.mp3" (le quité
+  // los espacios y acentos del nombre original) junto a este index.html.
+  // Si algún día quieres cambiar la canción, solo reemplaza ese archivo
+  // por uno nuevo con el mismo nombre, o cambia el nombre aquí abajo.
+  songSrc: "cancion.mp3",
+};
+
+/* ============================================================
+   A partir de aquí el código LEE el CONFIG de arriba y arma la
+   página. No es necesario editar esto para personalizar la boda.
+   ============================================================ */
+
+// --- Textos principales ---
+document.getElementById('hero-names').textContent = CONFIG.coupleNames;
+document.getElementById('footer-names').textContent = CONFIG.coupleNames;
+document.getElementById('hero-date').textContent = CONFIG.weddingDateDisplay;
+document.title = CONFIG.coupleNames + " | Nuestra boda";
+
+// --- Logo real (si Mariane ya puso CONFIG.logoSrc) ---
+// Nota: el sello del sobre ahora es una foto real (seal-photo.png, ver el
+// HTML del "envelope-screen"), así que ya no hay opción de logo "en el
+// sello". El logo puede mostrarse en la portada, en el footer, o en AMBOS
+// a la vez (showLogoHero / showLogoFooter, independientes entre sí).
+if (CONFIG.logoSrc) {
+  if (CONFIG.showLogoHero) {
+    // logo a color completo, justo después de la cuenta regresiva
+    const heroLogo = document.getElementById('hero-logo');
+    heroLogo.src = CONFIG.logoSrc;
+    heroLogo.hidden = false;
+  }
+  if (CONFIG.showLogoFooter) {
+    // logo a color completo, al final, en vez del texto "Frida & Simón"
+    const footerLogo = document.getElementById('footer-logo');
+    footerLogo.src = CONFIG.logoSrc;
+    footerLogo.hidden = false;
+    document.getElementById('footer-names').hidden = true;
+  }
+}
+document.getElementById('rsvp-deadline').textContent = CONFIG.rsvpDeadline;
+document.getElementById('rsvp-btn').href = CONFIG.rsvpFormUrl;
+document.getElementById('rsvp-extra-note').textContent = CONFIG.rsvpExtraNote || '';
+document.getElementById('dress-code-text').textContent = CONFIG.dressCode;
+document.getElementById('quote-text').textContent = CONFIG.quote;
+document.getElementById('footer-thanks').textContent = CONFIG.thankYouMessage;
+
+// --- Nota de código de vestimenta (colores a evitar) ---
+if (CONFIG.dressCodeNote) {
+  document.getElementById('dress-code-note').textContent = CONFIG.dressCodeNote;
+}
+
+// --- Link a Pinterest con ideas de outfit ---
+if (CONFIG.dressCodePinterestUrl) {
+  const pinterestLink = document.getElementById('dress-code-pinterest');
+  pinterestLink.href = CONFIG.dressCodePinterestUrl;
+  pinterestLink.hidden = false;
+}
+
+// --- Itinerario (timeline) ---
+const timelineEl = document.getElementById('timeline');
+CONFIG.itinerary.forEach(item => {
+  const row = document.createElement('div');
+  row.className = 'tl-item';
+  row.innerHTML = `
+    <div class="tl-icon"><svg viewBox="0 0 48 48"><use href="#icon-${item.icon}"/></svg></div>
+    <div class="tl-text">
+      <div class="time">${item.time}</div>
+      <div class="title">${item.title}</div>
+    </div>`;
+  timelineEl.appendChild(row);
+});
+// nota debajo del itinerario, solo si hay algo que decir
+if (CONFIG.itineraryNote) {
+  const note = document.createElement('p');
+  note.style.cssText = 'margin-top:8px; font-size:15px; font-style:italic; color:var(--sage-dark);';
+  note.textContent = CONFIG.itineraryNote;
+  timelineEl.after(note);
+}
+
+// --- Paleta de código de vestimenta (círculo + nombre del tono) ---
+const swatchesEl = document.getElementById('dress-swatches');
+CONFIG.dressColors.forEach(color => {
+  const item = document.createElement('div');
+  item.className = 'swatch-item';
+  item.innerHTML = `
+    <div class="swatch" style="background:${color.hex};"></div>
+    <div class="swatch-name">${color.name}</div>`;
+  swatchesEl.appendChild(item);
+});
+
+// --- Tips y notas ---
+const tipsListEl = document.getElementById('tips-list');
+if (CONFIG.tips && CONFIG.tips.length){
+  CONFIG.tips.forEach(t => {
+    const li = document.createElement('li');
+    if (t.important) li.classList.add('important');
+    li.innerHTML = `<span class="bullet"></span><span>${t.text}</span>`;
+    tipsListEl.appendChild(li);
+  });
+}
+document.getElementById('tips-closing').textContent = CONFIG.tipsClosing || '';
+
+// --- Lugares: tarjetas dentro de "Detalles" ---
+const venuesDetails = document.getElementById('venues-in-details');
+CONFIG.venues.forEach(v => {
+  const card = document.createElement('div');
+  card.className = 'venue-card';
+  card.innerHTML = `
+    <p class="eyebrow" style="margin-bottom:6px;">${v.label}</p>
+    <h4>${v.name}</h4>
+    <p class="addr">${v.address}</p>`;
+  venuesDetails.appendChild(card);
+});
+
+// --- Lugares: sección de mapas ---
+const venuesMapList = document.getElementById('venues-map-list');
+CONFIG.venues.forEach(v => {
+  const q = encodeURIComponent(v.mapsQuery);
+  const wrap = document.createElement('div');
+  wrap.className = 'venue-card';
+  wrap.innerHTML = `
+    <p class="eyebrow" style="margin-bottom:6px;">${v.label}</p>
+    <h4>${v.name}</h4>
+    <p class="addr">${v.address}</p>
+    <iframe class="map-frame" loading="lazy"
+      src="https://www.google.com/maps?q=${q}&output=embed"></iframe>
+    <div style="margin-top:16px; text-align:center;">
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/dir/?api=1&destination=${q}">Cómo llegar</a>
+    </div>`;
+  venuesMapList.appendChild(wrap);
+});
+
+// --- Fotos de la pareja ("Retratos de nuestro amor") ---
+const photosEl = document.getElementById('historia-photos');
+CONFIG.storyPhotos.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'polaroid';
+  const imgHtml = p.src
+    ? `<img src="${p.src}" alt="${p.caption}">`
+    : `<div class="ph">Sube aquí tu foto<br>(pon la ruta en storyPhotos)</div>`;
+  card.innerHTML = `${imgHtml}<div class="cap">${p.caption}</div>`;
+  photosEl.appendChild(card);
+});
+
+// --- Mesa de regalos / transferencia ---
+if (CONFIG.gift) {
+  document.getElementById('gift-note').textContent = CONFIG.gift.note;
+  document.getElementById('gift-card').innerHTML = `
+    <div class="row"><span class="k">Banco</span><span class="v">${CONFIG.gift.bank}</span></div>
+    <div class="row"><span class="k">A nombre de</span><span class="v">${CONFIG.gift.accountName}</span></div>
+    <div class="row"><span class="k">CLABE</span><span class="v">${CONFIG.gift.clabe}</span></div>
+    <div class="row"><span class="k">Cuenta</span><span class="v">${CONFIG.gift.account}</span></div>`;
+}
+
+// --- Abrir el sobre ---
+const envelope = document.getElementById('envelope');
+const envelopeScreen = document.getElementById('envelope-screen');
+const site = document.getElementById('site');
+
+envelope.addEventListener('click', () => {
+  envelope.classList.add('open');
+  setTimeout(() => {
+    envelopeScreen.classList.add('closed');
+    site.classList.add('visible');
+    // Los lirios calla de los laterales (.side-flower) empiezan invisibles
+    // y solo aparecen con esta clase — Mariane pidió que NO se vean sobre
+    // la pantalla del sobre, solo después de abrirlo.
+    document.body.classList.add('envelope-opened');
+  }, 600);
+  tryStartMusic(); // abrir el sobre cuenta como el "clic" que el navegador exige para dejar sonar audio solo
+});
+
+// --- Botón flotante de música ---
+const musicBtn = document.getElementById('music-toggle');
+const musicIconUse = document.getElementById('music-icon-use');
+const bgSong = document.getElementById('bg-song');
+
+function setMusicIcon(playing){
+  musicIconUse.setAttribute('href', playing ? '#icon-music' : '#icon-music-off');
+  musicBtn.classList.toggle('playing', playing);
+  musicBtn.setAttribute('aria-label', playing ? 'Pausar música' : 'Reproducir música');
+}
+
+if (CONFIG.songSrc) {
+  bgSong.src = CONFIG.songSrc;
+  musicBtn.hidden = false;
+}
+
+function tryStartMusic(){
+  if (!CONFIG.songSrc) return;
+  bgSong.play().then(() => setMusicIcon(true)).catch(() => setMusicIcon(false));
+}
+
+musicBtn.addEventListener('click', () => {
+  if (!CONFIG.songSrc) return;
+  if (bgSong.paused) {
+    bgSong.play().then(() => setMusicIcon(true)).catch(() => setMusicIcon(false));
+  } else {
+    bgSong.pause();
+    setMusicIcon(false);
+  }
+});
+
+// --- Cuenta regresiva ---
+const target = new Date(CONFIG.weddingDateTime).getTime();
+function updateCountdown(){
+  const now = Date.now();
+  const diff = target - now;
+  const els = {
+    d: document.getElementById('cd-days'),
+    h: document.getElementById('cd-hours'),
+    m: document.getElementById('cd-min'),
+    s: document.getElementById('cd-sec'),
+  };
+  if (diff <= 0){
+    els.d.textContent = '00'; els.h.textContent = '00';
+    els.m.textContent = '00'; els.s.textContent = '00';
+    document.getElementById('hero-eyebrow').textContent = '¡Ya nos casamos!';
+    return;
+  }
+  const day = Math.floor(diff / 86400000);
+  const hr  = Math.floor((diff % 86400000) / 3600000);
+  const min = Math.floor((diff % 3600000) / 60000);
+  const sec = Math.floor((diff % 60000) / 1000);
+  els.d.textContent = String(day).padStart(2,'0');
+  els.h.textContent = String(hr).padStart(2,'0');
+  els.m.textContent = String(min).padStart(2,'0');
+  els.s.textContent = String(sec).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// --- Animación al hacer scroll ---
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// --- Nav lateral: resalta la sección activa ---
+const navLinks = document.querySelectorAll('#dot-nav a');
+const sections = ['inicio','detalles','historia','ubicacion','tips','regalo','rsvp'].map(id => document.getElementById(id));
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`#dot-nav a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.5 });
+sections.forEach(s => s && navObserver.observe(s));
+</script>
+
+</body>
+</html>
