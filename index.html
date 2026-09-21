@@ -363,6 +363,12 @@
 
   .envelope-hint{
     margin-top:34px;
+    /* Antes este texto no tenía nada de aire a los lados y en celulares
+       angostos quedaba pegado justo al borde de la pantalla, cortándose.
+       max-width + padding le dan el mismo respiro que el resto del sitio. */
+    max-width:280px;
+    padding:0 20px;
+    text-align:center;
     font-family:'EB Garamond', serif;
     letter-spacing:0.25em;
     text-transform:uppercase;
@@ -1402,6 +1408,27 @@ musicBtn.addEventListener('click', () => {
   } else {
     bgSong.pause();
     setMusicIcon(false);
+  }
+});
+
+/* La música es solo para acompañar mientras alguien está viendo la
+   invitación — Mariane pidió que se detenga si la persona bloquea el
+   celular o se cambia de pestaña/app, en vez de seguir sonando de fondo
+   sin que nadie la esté viendo. "visibilitychange" avisa exactamente
+   eso. Se guarda si estaba sonando ANTES de esconderse, para que al
+   regresar (desbloquear el celular, volver a la pestaña) la canción siga
+   donde iba, en vez de tener que darle play otra vez a mano. */
+let songWasPlayingBeforeHide = false;
+document.addEventListener('visibilitychange', () => {
+  if (!CONFIG.songSrc) return;
+  if (document.hidden) {
+    songWasPlayingBeforeHide = !bgSong.paused;
+    if (songWasPlayingBeforeHide) {
+      bgSong.pause();
+      setMusicIcon(false);
+    }
+  } else if (songWasPlayingBeforeHide) {
+    bgSong.play().then(() => setMusicIcon(true)).catch(() => setMusicIcon(false));
   }
 });
 
