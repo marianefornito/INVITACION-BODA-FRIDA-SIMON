@@ -431,11 +431,16 @@
 
   /* ---------- hero ---------- */
   #inicio{
-    min-height:100vh; /* respaldo para navegadores viejos */
+    min-height:100vh; /* respaldo si nada más funciona */
     /* En celular, "100vh" mide la pantalla como si la barra de direcciones
        ya estuviera oculta, así que reserva más espacio del que en realidad
        se ve — eso dejaba un hueco enorme y vacío justo al abrir el sobre.
-       "100dvh" (dynamic viewport height) sí mide lo que realmente se ve. */
+       "100dvh" arregla esto en navegadores nuevos, pero algunos iPhones
+       (según qué tan actualizado esté el iOS) todavía no lo reconocen bien.
+       "--vh" es el respaldo que SÍ funciona en cualquier celular: un poco
+       de JavaScript (al final del archivo) mide la altura real y visible
+       de la pantalla y la guarda ahí, actualizándola si cambia. */
+    min-height:calc(var(--vh, 1vh) * 100);
     min-height:100dvh;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center;
@@ -1024,6 +1029,19 @@
 </svg>
 
 <script>
+/* ---------- arreglo del "100vh" en celular ----------
+   Mide la altura REAL y visible de la pantalla (sin contar la barra de
+   direcciones del navegador) y la guarda en la variable CSS --vh, que usa
+   la sección #inicio de arriba. Se vuelve a medir si el usuario gira el
+   celular o si la barra de direcciones aparece/desaparece al hacer scroll,
+   para que nunca se quede un hueco vacío desactualizado. */
+function setRealVH(){
+  document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+}
+setRealVH();
+window.addEventListener('resize', setRealVH);
+window.addEventListener('orientationchange', setRealVH);
+
 /* ============================================================
    CONFIG — EDITA SOLO AQUÍ para poner los datos reales de la boda.
    No necesitas tocar nada más del archivo.
