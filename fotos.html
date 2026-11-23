@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f6f1e7">
+<title>Comparte tus fotos · Frida & Simón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&display=swap" rel="stylesheet">
+
+<style>
+  /* Misma paleta, tipografías, fondo y marco que la invitación (index.html),
+     para que el QR lleve a una página que se sienta parte de la misma pieza. */
+  :root{
+    --ivory:#f6f1e7;
+    --ivory-soft:#efe8d8;
+    --sage:#8a9678;
+    --sage-dark:#5f6b4d;
+    --sage-pale:#c9d0bb;
+    --ink:#2c2b23;
+    --white:#fffdf8;
+    --line: rgba(44,43,35,0.18);
+    --shadow: 0 1px 2px rgba(44,43,35,0.10), 0 18px 38px -8px rgba(44,43,35,0.22);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background-image:url("fondo-textura.jpg");
+    background-repeat:repeat;
+    background-size:300px auto;
+    background-color:var(--ivory);
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    font-size:19px;
+    font-weight:500;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .page-frame{
+    position:fixed; inset:12px; z-index:121; pointer-events:none;
+    border:1px solid rgba(95,107,77,0.38);
+  }
+  .page-frame::before{
+    content:''; position:absolute; inset:6px;
+    border:1px solid rgba(95,107,77,0.20);
+  }
+  @media (max-width:520px){
+    .page-frame{ inset:7px; }
+    .page-frame::before{ inset:4px; }
+  }
+
+  .side-flower{
+    position:fixed; top:50%; transform:translateY(-50%);
+    height:80vh; width:auto; max-width:200px;
+    z-index:125; pointer-events:none; opacity:0.92;
+    filter:drop-shadow(0 10px 18px rgba(44,43,35,0.18));
+  }
+  .side-flower-left{ left:0; }
+  .side-flower-right{ right:0; transform:translateY(-50%) scaleX(-1); }
+  @media (max-width:900px){ .side-flower{ height:64vh; max-width:112px; opacity:0.85; } }
+  @media (max-width:560px){ .side-flower{ height:46vh; max-width:38px; opacity:0.6; } }
+
+  .wrap{
+    max-width:560px; margin:0 auto;
+    padding:64px 28px 90px;
+    position:relative; z-index:1;
+  }
+  @media (max-width:560px){ .wrap{ padding:48px 44px 80px; } }
+
+  .center{ text-align:center; }
+
+  .logo{ width:118px; margin:0 auto 22px; display:block; }
+
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:0.32em;
+    font-size:13px; color:var(--sage-dark); font-weight:600;
+  }
+  .display{
+    font-family:'Playfair Display', serif; font-style:italic; font-weight:600;
+    line-height:1.08;
+  }
+  h1.display{ font-size:clamp(34px, 9vw, 48px); margin:10px 0 12px; }
+  .accent-script{ font-family:'Parisienne', cursive; font-size:30px; color:var(--sage-dark); line-height:1; }
+  .lead{ font-size:18px; max-width:400px; margin:0 auto; }
+
+  .icon{
+    display:block; width:44px; height:44px; margin:0 auto 12px;
+    color:var(--sage-dark); stroke:var(--sage-dark); fill:none;
+  }
+  .camera-flash{ color:#e8c877; animation:cameraBlink 3.4s steps(1) infinite; }
+  @keyframes cameraBlink{ 0%,90%{opacity:.18} 92%,96%{opacity:1} 100%{opacity:.18} }
+
+  /* ---------- tarjeta principal ---------- */
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:28px 22px 26px;
+    margin-top:34px;
+  }
+
+  label.field-label{
+    display:block; font-size:13px; letter-spacing:0.22em; text-transform:uppercase;
+    font-weight:600; color:var(--sage-dark); margin-bottom:8px;
+  }
+  .optional{ text-transform:none; letter-spacing:0; font-weight:500; font-style:italic; color:#7b7a6e; }
+  input[type="text"]{
+    width:100%; font:inherit; font-size:18px; color:var(--ink);
+    padding:12px 14px; border:1px solid var(--sage-pale); border-radius:10px;
+    background:var(--ivory); outline:none; transition:border-color .2s;
+  }
+  input[type="text"]:focus{ border-color:var(--sage-dark); }
+
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; margin-top:20px;
+    padding:17px 20px;
+    background:var(--sage-dark); color:var(--white);
+    font-family:'EB Garamond', serif; font-size:14px; font-weight:600;
+    letter-spacing:0.18em; text-transform:uppercase;
+    border:1px solid var(--sage-dark); border-radius:12px;
+    cursor:pointer; transition:transform .15s, background .3s;
+  }
+  .btn:active{ transform:scale(.98); }
+  @media (max-width:420px){ .btn{ letter-spacing:0.1em; font-size:13px; gap:8px; } }
+  .btn svg{ width:22px; height:22px; stroke:currentColor; fill:none; }
+  .btn-ghost{ background:transparent; color:var(--sage-dark); }
+  .btn[hidden], [hidden]{ display:none !important; }
+  #file-input{ position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+
+  .hint{ font-size:15px; color:#6c6b5f; text-align:center; margin-top:12px; font-style:italic; }
+
+  /* ---------- resumen + lista de archivos ---------- */
+  .summary{ margin-top:0; }
+  .summary-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:16px; }
+  .summary-top strong{ font-weight:600; color:var(--sage-dark); }
+  .bar{ height:6px; background:var(--ivory-soft); border-radius:6px; overflow:hidden; margin-top:8px; }
+  .bar > span{ display:block; height:100%; width:0; background:var(--sage); border-radius:6px; transition:width .3s ease; }
+
+  .files{ list-style:none; margin-top:18px; display:grid; gap:10px; }
+  .file{
+    display:grid; grid-template-columns:52px 1fr auto; gap:12px; align-items:center;
+    padding:8px; border:1px solid var(--line); border-radius:12px; background:var(--ivory);
+  }
+  .thumb{
+    width:52px; height:52px; border-radius:8px; overflow:hidden; background:var(--sage-pale);
+    display:flex; align-items:center; justify-content:center; color:var(--sage-dark);
+  }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb svg{ width:24px; height:24px; stroke:currentColor; fill:none; }
+  .file-name{ font-size:15px; line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .file-meta{ font-size:13px; color:#7b7a6e; }
+  .file .bar{ height:4px; margin-top:6px; }
+  .status{ width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+  .status svg{ width:22px; height:22px; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  .status .ok{ stroke:var(--sage-dark); }
+  .status .err{ stroke:#a2553f; }
+  .spinner{
+    width:18px; height:18px; border-radius:50%;
+    border:2px solid var(--sage-pale); border-top-color:var(--sage-dark);
+    animation:spin .9s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .file.is-error{ border-color:rgba(162,85,63,.4); }
+  .file.is-error .file-meta{ color:#a2553f; }
+
+  .notice{
+    margin-top:16px; padding:12px 14px; border-radius:10px;
+    background:var(--ivory-soft); font-size:15px; text-align:center;
+  }
+
+  /* ---------- pantalla de gracias ---------- */
+  .thanks{ text-align:center; padding:8px 4px 4px; }
+  .thanks .heart{ width:46px; height:46px; margin:0 auto 6px; color:var(--sage-dark); animation:beat 1.6s ease-in-out infinite; }
+  @keyframes beat{ 0%,100%{transform:scale(1)} 15%{transform:scale(1.12)} 30%{transform:scale(1)} }
+  .thanks h2{ font-size:30px; margin:6px 0 8px; }
+
+  footer{ text-align:center; margin-top:42px; font-size:15px; color:#6c6b5f; }
+  footer a{ color:var(--sage-dark); }
+</style>
+</head>
+<body>
+
+<div class="page-frame" aria-hidden="true"></div>
+<img class="side-flower side-flower-left" src="calla-lily.png" alt="" aria-hidden="true">
+<img class="side-flower side-flower-right" src="calla-lily.png" alt="" aria-hidden="true">
+
+<main class="wrap">
+  <header class="center">
+    <img class="logo" src="logo-fs.png" alt="Frida & Simón">
+    <svg class="icon" viewBox="0 0 48 48" aria-hidden="true">
+      <use href="#icon-camera"/><use href="#icon-camera-flash" class="camera-flash"/>
+    </svg>
+    <p class="eyebrow">Recuerdos · 5 · XII · 2026</p>
+    <h1 class="display">Comparte tus fotos</h1>
+    <p class="lead">Nos encantaría ver la boda a través de tus ojos. Sube aquí las fotos y videos que tomes hoy — llegan directo a nosotros.</p>
+  </header>
+
+  <section class="card" id="card">
+    <!-- Paso 1: elegir -->
+    <div id="step-pick">
+      <label class="field-label" for="guest">Tu nombre <span class="optional">(opcional)</span></label>
+      <input type="text" id="guest" maxlength="60" autocomplete="name" placeholder="Para saber de quién son 💚">
+
+      <input type="file" id="file-input" accept="image/*,video/*" multiple>
+      <label class="btn" for="file-input" id="pick-btn">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        Elegir fotos y videos
+      </label>
+      <p class="hint">Puedes elegir varias a la vez. Sin cuentas ni contraseñas.</p>
+    </div>
+
+    <!-- Paso 2: subiendo -->
+    <div id="step-upload" hidden>
+      <div class="summary">
+        <div class="summary-top"><span id="summary-text">Subiendo…</span><strong id="summary-pct">0%</strong></div>
+        <div class="bar"><span id="summary-bar"></span></div>
+      </div>
+      <p class="notice" id="keep-open">Mantén esta página abierta hasta que termine ✨</p>
+      <ul class="files" id="files"></ul>
+      <button class="btn btn-ghost" id="retry-btn" hidden>Reintentar</button>
+    </div>
+
+    <!-- Paso 3: gracias -->
+    <div id="step-done" class="thanks" hidden>
+      <svg class="heart" viewBox="0 0 48 48" aria-hidden="true"><use href="#icon-heart"/></svg>
+      <p class="accent-script">¡Gracias!</p>
+      <h2 class="display">Tus recuerdos ya son nuestros</h2>
+      <p class="lead" id="done-text">Gracias por ayudarnos a guardar este día para siempre.</p>
+      <label class="btn" for="file-input" id="more-btn">Subir más</label>
+    </div>
+  </section>
+
+  <footer>
+    <a href="./">← Volver a la invitación</a>
+  </footer>
+</main>
+
+<!-- Íconos: los mismos trazos que la invitación -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="icon-camera" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="15" y="9" width="11" height="6" rx="1.5"/>
+      <rect x="5" y="14" width="38" height="26" rx="3"/>
+      <circle cx="23" cy="27" r="8"/>
+      <circle cx="23" cy="27" r="3.2"/>
+    </g>
+    <g id="icon-camera-flash" fill="currentColor" stroke="none"><circle cx="36" cy="20" r="2.6"/></g>
+    <g id="icon-heart" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 40 C10 30 5 22 5 15.5 A9.5 9.5 0 0 1 24 12 A9.5 9.5 0 0 1 43 15.5 C43 22 38 30 24 40 Z"/>
+    </g>
+  </defs>
+</svg>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN — lo único que hay que tocar
+   ============================================================
+   Pega aquí el link de "App web" que te da Google Apps Script
+   al hacer la implementación (termina en /exec). */
+const SCRIPT_URL = "PEGA_AQUI_EL_LINK_DEL_SCRIPT";
+
+/* Modo de prueba: abre fotos.html?demo=1 para ver cómo se ve la
+   subida SIN mandar nada a Drive (sirve para enseñársela a Frida). */
+const DEMO = new URLSearchParams(location.search).has("demo");
+
+const SIMULTANEOUS = 2; // cuántos archivos se suben al mismo tiempo
+
+/* ============================================================ */
+const $ = (id) => document.getElementById(id);
+const input = $("file-input");
+const guestInput = $("guest");
+let queue = [];     // {file, li, loaded, state: 'wait'|'up'|'ok'|'err'}
+let running = 0;
+
+try { guestInput.value = localStorage.getItem("fs-guest") || ""; } catch (e) {}
+guestInput.addEventListener("change", () => {
+  try { localStorage.setItem("fs-guest", guestInput.value.trim()); } catch (e) {}
+});
+
+input.addEventListener("change", () => {
+  const files = Array.from(input.files || []).filter(f => /^(image|video)\//.test(f.type) || /\.(heic|heif|mov|mp4|jpe?g|png)$/i.test(f.name));
+  input.value = "";
+  if (!files.length) return;
+  $("step-pick").hidden = true;
+  $("step-done").hidden = true;
+  $("step-upload").hidden = false;
+  $("keep-open").hidden = false;
+  files.forEach(addToQueue);
+  updateSummary();
+  pump();
+});
+
+function addToQueue(file) {
+  const isVideo = file.type.startsWith("video/") || /\.(mov|mp4)$/i.test(file.name);
+  const li = document.createElement("li");
+  li.className = "file";
+  li.innerHTML = `
+    <div class="thumb">${isVideo
+      ? '<svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg>'
+      : ""}</div>
+    <div style="min-width:0">
+      <div class="file-name"></div>
+      <div class="file-meta">${prettySize(file.size)} · en espera</div>
+      <div class="bar"><span></span></div>
+    </div>
+    <div class="status"></div>`;
+  li.querySelector(".file-name").textContent = file.name;
+  if (!isVideo && file.type.startsWith("image/") && !/heic|heif/i.test(file.type)) {
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = () => URL.revokeObjectURL(img.src);
+    li.querySelector(".thumb").appendChild(img);
+  }
+  $("files").appendChild(li);
+  queue.push({ file, li, loaded: 0, state: "wait" });
+}
+
+function pump() {
+  while (running < SIMULTANEOUS) {
+    const item = queue.find(q => q.state === "wait");
+    if (!item) break;
+    running++;
+    upload(item).finally(() => { running--; pump(); checkDone(); });
+  }
+}
+
+async function upload(item) {
+  setState(item, "up", "preparando…");
+  try {
+    if (DEMO) { await fakeUpload(item); }
+    else {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, // evita el "preflight" de CORS
+        body: JSON.stringify({
+          name: item.file.name,
+          type: item.file.type || guessType(item.file.name),
+          size: item.file.size,
+          guest: guestInput.value.trim()
+        })
+      });
+      const data = await res.json();
+      if (!data.ok) throw friendly(data.error || "no se pudo preparar la subida");
+      await putFile(item, data.uploadUrl);
+    }
+    item.loaded = item.file.size;
+    setState(item, "ok", "listo");
+  } catch (err) {
+    console.error(err);
+    // solo mostramos mensajes escritos por nosotros; lo técnico va a la consola
+    setState(item, "err", err.friendly ? err.message : "no se pudo subir — revisa tu señal");
+  }
+  updateSummary();
+}
+
+function putFile(item, url) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", url);
+    xhr.upload.onprogress = (e) => {
+      if (!e.lengthComputable) return;
+      item.loaded = e.loaded;
+      setState(item, "up", Math.round(e.loaded / e.total * 100) + "%");
+      updateSummary();
+    };
+    xhr.onload = () => (xhr.status === 200 || xhr.status === 201) ? resolve() : reject(new Error("Drive respondió " + xhr.status));
+    xhr.onerror = () => reject(friendly("se perdió la conexión — reintenta"));
+    xhr.send(item.file);
+  });
+}
+
+function fakeUpload(item) {
+  return new Promise((resolve) => {
+    const total = item.file.size, step = Math.max(total / 25, 1);
+    const t = setInterval(() => {
+      item.loaded = Math.min(total, item.loaded + step);
+      setState(item, "up", Math.round(item.loaded / total * 100) + "%");
+      updateSummary();
+      if (item.loaded >= total) { clearInterval(t); resolve(); }
+    }, 120);
+  });
+}
+
+function setState(item, state, text) {
+  item.state = state;
+  const li = item.li;
+  li.classList.toggle("is-error", state === "err");
+  li.querySelector(".file-meta").textContent = prettySize(item.file.size) + " · " + text;
+  li.querySelector(".bar span").style.width = (state === "ok" ? 100 : (item.loaded / item.file.size * 100)) + "%";
+  li.querySelector(".status").innerHTML =
+    state === "up" ? '<div class="spinner"></div>' :
+    state === "ok" ? '<svg viewBox="0 0 24 24"><path class="ok" d="M5 12.5l4.5 4.5L19 7.5"/></svg>' :
+    state === "err" ? '<svg viewBox="0 0 24 24"><path class="err" d="M7 7l10 10M17 7L7 17"/></svg>' : "";
+}
+
+function updateSummary() {
+  const total = queue.reduce((s, q) => s + q.file.size, 0) || 1;
+  const loaded = queue.reduce((s, q) => s + (q.state === "ok" ? q.file.size : q.loaded), 0);
+  const done = queue.filter(q => q.state === "ok").length;
+  const pct = Math.round(loaded / total * 100);
+  $("summary-bar").style.width = pct + "%";
+  $("summary-pct").textContent = pct + "%";
+  $("summary-text").textContent = `${done} de ${queue.length} listos`;
+}
+
+function checkDone() {
+  if (queue.some(q => q.state === "wait" || q.state === "up")) return;
+  const failed = queue.filter(q => q.state === "err").length;
+  $("keep-open").hidden = true;
+  $("retry-btn").hidden = failed === 0;
+  if (failed === 0) {
+    const n = queue.length;
+    $("done-text").textContent = n === 1
+      ? "Tu recuerdo llegó perfecto. Gracias por ayudarnos a guardar este día para siempre."
+      : `Llegaron tus ${n} recuerdos. Gracias por ayudarnos a guardar este día para siempre.`;
+    $("step-upload").hidden = true;
+    $("step-done").hidden = false;
+    queue = []; $("files").innerHTML = "";
+  }
+}
+
+$("retry-btn").addEventListener("click", () => {
+  queue.filter(q => q.state === "err").forEach(q => { q.loaded = 0; setState(q, "wait", "en espera"); });
+  $("retry-btn").hidden = true;
+  $("keep-open").hidden = false;
+  updateSummary(); pump();
+});
+
+// aviso si alguien intenta cerrar mientras se sube algo
+window.addEventListener("beforeunload", (e) => {
+  if (queue.some(q => q.state === "up" || q.state === "wait")) { e.preventDefault(); e.returnValue = ""; }
+});
+
+function friendly(msg) { const e = new Error(msg); e.friendly = true; return e; }
+function prettySize(b) {
+  if (b < 1024 * 1024) return Math.max(1, Math.round(b / 1024)) + " KB";
+  if (b < 1024 * 1024 * 1024) return (b / 1024 / 1024).toFixed(1) + " MB";
+  return (b / 1024 / 1024 / 1024).toFixed(2) + " GB";
+}
+function guessType(name) {
+  const ext = (name.split(".").pop() || "").toLowerCase();
+  return ({ heic:"image/heic", heif:"image/heif", jpg:"image/jpeg", jpeg:"image/jpeg", png:"image/png", mov:"video/quicktime", mp4:"video/mp4" })[ext] || "image/jpeg";
+}
+</script>
+</body>
+</html>
